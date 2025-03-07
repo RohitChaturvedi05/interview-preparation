@@ -1,67 +1,10 @@
 ## Javascript interview Questions
 
-### <a>Are you familiar with ES6 and what are some of the advantages over ES5?</a>
+---
 
-ES6 (ECMAScript 2015) introduced several important features and improvements over ES5:
+## Basics & Data Types
 
--   Arrow functions
--   Template literals
--   Destructuring
--   Classes
--   Modules
--   Let and const declarations
--   Promises
--   Default parameters
--   Rest and spread operators
-
-Example:
-
-```javascript
-// ES5
-var add = function (a, b) {
-    return a + b;
-};
-
-// ES6
-const add = (a, b) => a + b;
-
-// Template literals
-const name = 'John';
-console.log(`Hello ${name}!`);
-
-// Destructuring
-const person = { name: 'John', age: 30 };
-const { name, age } = person;
-```
-
-### <a>How are you leveraging ES6 in your current project?</a>
-
-Common ES6 features used in modern projects:
-
-1. Using arrow functions for callbacks and methods
-2. Implementing async/await for asynchronous operations
-3. Using modules for better code organization
-4. Leveraging destructuring for cleaner code
-5. Using template literals for string interpolation
-
-Example:
-
-```javascript
-// Modules
-import { getData } from './api';
-
-// Async/await
-async function fetchData() {
-    try {
-        const data = await getData();
-        return data;
-    } catch (error) {
-        console.error(error);
-    }
-}
-```
-
-### <a>What are the differences between var, let, and const?</a>
+### What are the differences between var, let, and const?
 
 | Feature              | var                                | let                               | const                           |
 | -------------------- | ---------------------------------- | --------------------------------- | ------------------------------- |
@@ -82,7 +25,217 @@ const z = 1;
 // z = 2; // Error: cannot reassign
 ```
 
-### <a>What are the differences between promises and async/await?</a>
+### What are the different data types in JavaScript?
+
+### What is the difference between `null` and `undefined`?
+
+### How does JavaScript handle type coercion?
+
+### What is the difference between `==` and `===` in JavaScript?
+
+### Explain the difference between `let`, `const`, and `var`.
+
+### How we could ensure our compatibility with all browsers?
+
+To ensure compatibility with older browsers:
+
+1. Use transpilers like Babel
+2. Use polyfills
+3. Implement feature detection
+4. Use build tools like webpack
+
+Example:
+
+### What are `symbol` in JavaScript ?
+
+Symbols are new primitive built-in object types introduced as part of ES6. Symbols return unique identifiers that can be used to add unique property keys to an object that won’t collide with keys of any other code that might add to the object.
+They are used as object properties that cannot be recreated. It basically helps us to enable encapsulation or information hiding.
+
+```javascript
+let symbol1 = Symbol('Jhon');
+let symbol2 = Symbol('Jhon');
+// Each time Symbol() method // is used to create new global // Symbol
+console.log(symbol1 == symbol2);
+```
+
+---
+
+## Functions & Scope`
+
+### What is "hoisting" in JavaScript?
+
+Hoisting is JavaScript's default behavior of moving declarations to the top of their scope during compilation. This means that regardless of where variables and functions are declared in the code, they are treated as if they are declared at the beginning of their scope.
+
+Variables declared with 'var' are hoisted and initialized with 'undefined', while variables declared with 'let' and 'const' are hoisted but not initialized, resulting in a reference error if accessed before declaration.
+
+Function declarations are also hoisted completely, allowing them to be called before they appear in the code, but function expressions are not hoisted in the same way.
+Example:
+
+```javascript
+console.log(x); // undefined
+var x = 5;
+
+// How it's actually interpreted
+var x;
+console.log(x);
+x = 5;
+
+// let and const are not hoisted
+// console.log(y); // ReferenceError
+let y = 5;
+```
+
+### What is the difference between function declaration and function expression?
+
+### How does JavaScript handle function hoisting?
+
+### What is a closure in JavaScript, and why is it useful?
+
+### How does lexical scoping work in JavaScript?
+
+### What is the difference between synchronous and asynchronous functions?
+
+### What is function\* in JavaScript ?
+
+A generator function is a special type of function that can be paused and resumed during its execution. It uses the `function*` syntax and the `yield` keyword to control the flow of execution.
+Example:
+
+```javascript
+function* generateSequence() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+let generator = generateSequence();
+
+console.log(generator.next().value); // Output: 1
+console.log(generator.next().value); // Output: 2
+console.log(generator.next().value); // Output: 3
+```
+
+### What is `Symbol.iterator` ?
+
+The `Symbol.iterator` symbol is used to specify the default iterator for an object. It is a built-in symbol that is used to represent the iterator object that is used to iterate over the elements of a collection.
+Example:
+
+```javascript
+const obj = {
+    items: [1, 2, 3],
+    [Symbol.iterator]: function () {
+        let index = 0;
+        return {
+            next: () => ({
+                value: this.items[index],
+                done: index++ >= this.items.length,
+            }),
+        };
+    },
+};
+for (const item of obj) {
+    console.log(item);
+}
+// Output:
+// 1
+// 2
+// 3
+```
+
+---
+
+## Objects & Prototypes
+
+### What is prototypal inheritance in JavaScript?
+
+Prototypal inheritance is a way of creating objects in JavaScript that allows objects to inherit properties and methods from other objects. It is a way of creating objects in JavaScript that allows objects to inherit properties and methods from other objects.
+
+objects have a special hidden property [[Prototype]] (as named in the specification), that is either null or references another object. That object is called “a prototype”:
+
+`Note:` that **proto** is not the same as the internal [[Prototype]] property. It’s a getter/setter for [[Prototype]]. Later we’ll see situations where it matters, for now let’s just keep it in mind, as we build our understanding of JavaScript language.
+Example:
+
+```javascript
+let animal = {
+    eats: true,
+};
+let rabbit = {
+    jumps: true,
+};
+rabbit.__proto__ = animal; // (*)
+// we can find both properties in rabbit now:
+console.log(rabbit.eats); // true (**)
+console.log(rabbit.jumps); // true
+```
+
+### How does `Object.create()` work?
+
+### What is the difference between `Object.freeze()`, `Object.seal()`, and `Object.assign()`?
+
+### What is an immutable object?
+
+An immutable object is one whose state cannot be changed after creation.
+
+Once an object is created as immutable, its properties cannot be added, modified, or deleted.
+This is particularly useful in functional programming and helps prevent unintended side-effects in your code. Immutable objects are inherently thread-safe and make it easier to reason about state changes in your application. In JavaScript, you can create immutable objects using Object.freeze() method, though it only provides shallow immutability. For deep immutability, you would need to recursively freeze nested objects or use specialized libraries.
+
+Significance:
+
+-   Predictable behavior
+-   Thread safety
+-   Easier debugging
+-   Better performance in some cases
+
+Example:
+
+```javascript
+// Creating immutable object
+const person = Object.freeze({
+    name: 'John',
+    age: 30,
+});
+
+// person.age = 31; // This will fail in strict mode
+```
+
+### How can you deep clone an object in JavaScript?
+
+### What are getters and setters in JavaScript, and how do you use them?
+
+---
+
+## Advanced JavaScript Concepts
+
+## Event Loop & Asynchronous JavaScript
+
+---
+
+### How does the JavaScript event loop work?
+
+### What is the difference between microtasks and macrotasks?
+
+### How do `setTimeout()` and `setInterval()` work in JavaScript?
+
+### Explain the difference between `Promise.all()`, `Promise.allSettled()`, `Promise.race()`, and `Promise.any()`.
+
+### How does async/await work internally?
+
+---
+
+## Closures & Higher-Order Functions
+
+---
+
+### What is a closure, and how does it work?
+
+### How do you create a private variable using closures in JavaScript?
+
+### What are higher-order functions, and how are they used?
+
+### How does JavaScript handle callback functions?
+
+### What is function currying, and how does it work?
+
+### What are the differences between promises and async/await?
 
 | Feature        | Promises                                                      | Async/await                              |
 | -------------- | ------------------------------------------------------------- | ---------------------------------------- |
@@ -112,113 +265,104 @@ async function getData() {
 }
 ```
 
-### <a>How we could ensure our compatibility with all browsers?</a>
+### What is functional programming?
 
-To ensure compatibility with older browsers:
+A programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state and mutable data.
 
-1. Use transpilers like Babel
-2. Use polyfills
-3. Implement feature detection
-4. Use build tools like webpack
+Key concepts:
 
-Example:
-
-### <a>What are the difference between TypeScript vs JavaScript?</a>
-
--   Additional compilation step
--   Learning curve
--   Increased initial development time
--   Larger project setup
-
-Example:
-
-```typescript
-// TypeScript
-interface User {
-    name: string;
-    age: number;
-}
-
-function greet(user: User): string {
-    return `Hello ${user.name}!`;
-}
-```
-
-### <a>What is an immutable object?</a>
-
-An immutable object is one whose state cannot be changed after creation.
-
-Once an object is created as immutable, its properties cannot be added, modified, or deleted.
-This is particularly useful in functional programming and helps prevent unintended side-effects in your code. Immutable objects are inherently thread-safe and make it easier to reason about state changes in your application. In JavaScript, you can create immutable objects using Object.freeze() method, though it only provides shallow immutability. For deep immutability, you would need to recursively freeze nested objects or use specialized libraries.
-
-Significance:
-
--   Predictable behavior
--   Thread safety
--   Easier debugging
--   Better performance in some cases
+-   Pure functions
+-   Immutability
+-   First-class functions
+-   Higher-order functions
 
 Example:
 
 ```javascript
-// Creating immutable object
-const person = Object.freeze({
-    name: 'John',
-    age: 30,
-});
+// Pure function
+const add = (a, b) => a + b;
 
-// person.age = 31; // This will fail in strict mode
+// Higher-order function
+const multiply = (factor) => (number) => number * factor;
+const double = multiply(2);
+console.log(double(5)); // 10
 ```
 
-### <a>What is "hoisting" in JavaScript?</a>
+### How to achieve functional chaining?
 
-Hoisting is JavaScript's default behavior of moving declarations to the top of their scope during compilation. This means that regardless of where variables and functions are declared in the code, they are treated as if they are declared at the beginning of their scope.
+Functional chaining is achieved by returning an object that contains methods, allowing multiple operations to be performed in sequence.
 
-Variables declared with 'var' are hoisted and initialized with 'undefined', while variables declared with 'let' and 'const' are hoisted but not initialized, resulting in a reference error if accessed before declaration.
-
-Function declarations are also hoisted completely, allowing them to be called before they appear in the code, but function expressions are not hoisted in the same way.
 Example:
 
 ```javascript
-console.log(x); // undefined
-var x = 5;
+class Calculator {
+    constructor(value = 0) {
+        this.value = value;
+    }
 
-// How it's actually interpreted
-var x;
-console.log(x);
-x = 5;
+    add(n) {
+        this.value += n;
+        return this;
+    }
 
-// let and const are not hoisted
-// console.log(y); // ReferenceError
-let y = 5;
+    multiply(n) {
+        this.value *= n;
+        return this;
+    }
+
+    getResult() {
+        return this.value;
+    }
+}
+
+const result = new Calculator(2).add(3).multiply(2).getResult();
+console.log(result); // 10
 ```
 
-### <a>What is the Event Loop in JavaScript?</a>
+### How to curry a function?
 
-The event loop is an important concept in JavaScript that enables asynchronous programming by handling tasks efficiently. Since JavaScript is single-threaded, it uses the event loop to manage the execution of multiple tasks without blocking the main thread.
+Currying is the process of converting a function that takes multiple arguments into a sequence of functions that each take a single argument.
 
-How the Event Loop Works
-The event loop continuously checks whether the call stack is empty and whether there are pending tasks in the callback queue or microtask queue. If the call stack is empty, it takes the first task from the queue and pushes it onto the call stack, where it is executed.
+Use cases for currying:
 
-Components:
+-   Event handling with pre-configured parameters
+-   Partial application of configuration settings
+-   Creating reusable validation functions with predefined rules
+-   Building URL generators with fixed base URLs
+-   Creating specialized math operations from generic functions
+-   API request functions with predefined headers or endpoints
+-   Format strings with consistent prefixes or suffixes
+-   Creating specialized filter functions from generic predicates
 
--   `Call Stack`: The mechanism that keeps track of function calls in your code. When you execute a function, it's added to the stack, and when the function returns, it's removed from the stack. It follows Last-In-First-Out (LIFO) principle.
+Example:
 
--   `Web APIs`: Browser-provided APIs (like setTimeout, DOM events, AJAX calls) that handle asynchronous operations outside the JavaScript engine. These APIs run in separate threads, allowing non-blocking operations.
+```javascript
+// Regular function
+function add(a, b, c) {
+    return a + b + c;
+}
 
--   `Callback Queue`: Also known as the Task Queue, it holds callback functions from completed asynchronous operations (like setTimeout callbacks, event handlers). These callbacks wait to be processed by the event loop.
+// Curried version
+const curriedAdd = (a) => (b) => (c) => a + b + c;
 
--   `Microtask Queue`: Similar to the callback queue but has higher priority. It handles promises and process.nextTick. Microtasks are processed immediately after the current synchronous code completes and before the next macrotask (callback queue items).
+console.log(curriedAdd(1)(2)(3)); // 6
 
-    <img src="./assets/js-event-loop.jpg" alt="Event Loop" width="500" />
+// Generic curry function
+function curry(fn) {
+    return function curried(...args) {
+        if (args.length >= fn.length) {
+            return fn.apply(this, args);
+        }
+        return function (...args2) {
+            return curried.apply(this, args.concat(args2));
+        };
+    };
+}
+```
 
-Why is the Event Loop Important?
+## This & Execution Context
 
--   Non-blocking Execution: Enables JavaScript to handle multiple tasks efficiently.
--   Better Performance: Ensures UI updates and API calls do not freeze the page.
--   Optimized Async Handling: Prioritizes microtasks over macrotasks for better responsiveness.
-
-### <a>What is `this` keyword in JS?</a>
+### What is `this` in JavaScript, and how does it behave in different contexts?
 
 'this' refers to the current execution context and its value depends on how and where it's used.
 Different contexts where 'this' behaves differently:
@@ -261,7 +405,45 @@ button.addEventListener('click', function () {
 });
 ```
 
-### <a>What is debouncing and throttling?</a>
+### What are the different ways to bind `this` in JavaScript?
+
+### How do `call()`, `apply()`, and `bind()` methods work?
+
+### How does arrow function handle `this` differently from regular functions?
+
+### What is the difference between implicit and explicit binding in JavaScript?
+
+---
+
+## Object-Oriented JavaScript
+
+### What is the difference between a class and a constructor function in JavaScript?
+
+### How do you implement inheritance using JavaScript classes?
+
+### What is the difference between static and instance methods in JavaScript?
+
+### How does method overriding work in JavaScript?
+
+### What is the role of the `super` keyword in JavaScript classes?
+
+---
+
+## Memory Management & Performance Optimization
+
+---
+
+### What are memory leaks in JavaScript, and how can you prevent them?
+
+### How does garbage collection work in JavaScript?
+
+### What are weak references in JavaScript, and when should you use them?
+
+### How does JavaScript optimize function execution using inline caching?
+
+### How can you improve JavaScript performance when working with large data sets?
+
+### What is debouncing and throttling?
 
 Techniques to control how many times we allow a function to be executed over time.
 
@@ -298,177 +480,88 @@ function throttle(func, limit) {
 }
 ```
 
-### <a>What is functional programming?</a>
+---
 
-A programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state and mutable data.
+## Modules & Design Patterns
 
-Key concepts:
+### What are ES6 modules, and how do they work?
 
--   Pure functions
--   Immutability
--   First-class functions
--   Higher-order functions
+### What is the difference between default and named exports?
 
-Example:
+### How does the Module Pattern work in JavaScript?
 
-```javascript
-// Pure function
-const add = (a, b) => a + b;
+### What is the difference between CommonJS and ES6 modules?
 
-// Higher-order function
-const multiply = (factor) => (number) => number * factor;
-const double = multiply(2);
-console.log(double(5)); // 10
-```
+### What are some common JavaScript design patterns, and when should they be used?
 
-### <a>How to achieve functional chaining?</a>
+---
 
-Functional chaining is achieved by returning an object that contains methods, allowing multiple operations to be performed in sequence.
+## DOM Manipulation & Events
 
-Example:
+### How does event delegation work in JavaScript?
 
-```javascript
-class Calculator {
-    constructor(value = 0) {
-        this.value = value;
-    }
+### What is the difference between `target` and `currentTarget` in event handling?
 
-    add(n) {
-        this.value += n;
-        return this;
-    }
+### What are event capturing and event bubbling in JavaScript?
 
-    multiply(n) {
-        this.value *= n;
-        return this;
-    }
+### How do you remove an event listener in JavaScript?
 
-    getResult() {
-        return this.value;
-    }
-}
+### What are `MutationObserver` and `IntersectionObserver`, and how do they work?
 
-const result = new Calculator(2).add(3).multiply(2).getResult();
-console.log(result); // 10
-```
+---
 
-### <a>How to curry a function?</a>
+## Error Handling & Debugging
 
-Currying is the process of converting a function that takes multiple arguments into a sequence of functions that each take a single argument.
+### How does JavaScript handle errors using try-catch?
 
-Use cases for currying:
+### What is the difference between `throw` and `console.error()`?
 
--   Event handling with pre-configured parameters
--   Partial application of configuration settings
--   Creating reusable validation functions with predefined rules
--   Building URL generators with fixed base URLs
--   Creating specialized math operations from generic functions
--   API request functions with predefined headers or endpoints
--   Format strings with consistent prefixes or suffixes
--   Creating specialized filter functions from generic predicates
+### What is the purpose of the `finally` block in JavaScript?
 
-Example:
+### How can you create a custom error in JavaScript?
 
-```javascript
-// Regular function
-function add(a, b, c) {
-    return a + b + c;
-}
+### What are some best practices for debugging JavaScript code?
 
-// Curried version
-const curriedAdd = (a) => (b) => (c) => a + b + c;
+---
 
-console.log(curriedAdd(1)(2)(3)); // 6
+## Data Structures & Algorithms
 
-// Generic curry function
-function curry(fn) {
-    return function curried(...args) {
-        if (args.length >= fn.length) {
-            return fn.apply(this, args);
-        }
-        return function (...args2) {
-            return curried.apply(this, args.concat(args2));
-        };
-    };
-}
-```
+### How do you implement a stack in JavaScript?
 
-### <a>What is function\* in JavaScript ?</a>
+### How do you implement a queue using JavaScript?
 
-A generator function is a special type of function that can be paused and resumed during its execution. It uses the `function*` syntax and the `yield` keyword to control the flow of execution.
-Example:
+### What is the difference between `map`, `filter`, and `reduce`?
 
-```javascript
-function* generateSequence() {
-    yield 1;
-    yield 2;
-    yield 3;
-}
+### How do you remove duplicates from an array in JavaScript?
 
-let generator = generateSequence();
+### What is the best way to find the largest/smallest number in an array?
 
-console.log(generator.next().value); // Output: 1
-console.log(generator.next().value); // Output: 2
-console.log(generator.next().value); // Output: 3
-```
+---
 
-### <a>What are `symbol` in JavaScript ?</a>
+## Modern JavaScript Features
 
-Symbols are new primitive built-in object types introduced as part of ES6. Symbols return unique identifiers that can be used to add unique property keys to an object that won’t collide with keys of any other code that might add to the object.
-They are used as object properties that cannot be recreated. It basically helps us to enable encapsulation or information hiding.
+### What are template literals, and how do they work?
 
-```javascript
-let symbol1 = Symbol('Jhon');
-let symbol2 = Symbol('Jhon');
-// Each time Symbol() method // is used to create new global // Symbol
-console.log(symbol1 == symbol2);
-```
+### How does optional chaining (`?.`) work in JavaScript?
 
-### <a>What is `Symbol.iterator` ?</a>
+### What is the purpose of the `??` (nullish coalescing) operator?
 
-The `Symbol.iterator` symbol is used to specify the default iterator for an object. It is a built-in symbol that is used to represent the iterator object that is used to iterate over the elements of a collection.
-Example:
+### What are the benefits of using `BigInt` in JavaScript?
 
-```javascript
-const obj = {
-    items: [1, 2, 3],
-    [Symbol.iterator]: function () {
-        let index = 0;
-        return {
-            next: () => ({
-                value: this.items[index],
-                done: index++ >= this.items.length,
-            }),
-        };
-    },
-};
-for (const item of obj) {
-    console.log(item);
-}
-// Output:
-// 1
-// 2
-// 3
-```
+### How do private class fields work in JavaScript?
 
-### <a>What is Prototypal inheritance in JS ?</a>
+---
 
-Prototypal inheritance is a way of creating objects in JavaScript that allows objects to inherit properties and methods from other objects. It is a way of creating objects in JavaScript that allows objects to inherit properties and methods from other objects.
+## Security & Best Practices
 
-objects have a special hidden property [[Prototype]] (as named in the specification), that is either null or references another object. That object is called “a prototype”:
+### How can you prevent Cross-Site Scripting (XSS) in JavaScript?
 
-`Note:` that **proto** is not the same as the internal [[Prototype]] property. It’s a getter/setter for [[Prototype]]. Later we’ll see situations where it matters, for now let’s just keep it in mind, as we build our understanding of JavaScript language.
-Example:
+### What are some common security vulnerabilities in JavaScript applications?
 
-```javascript
-let animal = {
-    eats: true,
-};
-let rabbit = {
-    jumps: true,
-};
-rabbit.__proto__ = animal; // (*)
-// we can find both properties in rabbit now:
-console.log(rabbit.eats); // true (**)
-console.log(rabbit.jumps); // true
-```
+### How does Content Security Policy (CSP) help secure JavaScript applications?
+
+### How do you safely handle user input in JavaScript?
+
+### What are some best practices for writing maintainable JavaScript code?
+
+---
