@@ -1,7 +1,5 @@
 ## Javascript interview Questions
 
----
-
 ## Basics & Data Types
 
 ### What are the differences between var, let, and const?
