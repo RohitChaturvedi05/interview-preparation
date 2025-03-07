@@ -1,8 +1,8 @@
-<style jsx>{`
+<style jsx>
     .markdown-body h3 {
         color: #4493f8;
     }
-`}</style>
+</style>
 
 ## Javascript interview Questions
 
