@@ -453,8 +453,11 @@ for (const item of obj) {
 
 ### <a>What is Prototypal inheritance in JS ?</a>
 
-In JavaScript, objects have a special hidden property [[Prototype]] (as named in the specification), that is either null or references another object. That object is called “a prototype”:
-`Please note:` that **proto** is not the same as the internal [[Prototype]] property. It’s a getter/setter for [[Prototype]]. Later we’ll see situations where it matters, for now let’s just keep it in mind, as we build our understanding of JavaScript language.
+Prototypal inheritance is a way of creating objects in JavaScript that allows objects to inherit properties and methods from other objects. It is a way of creating objects in JavaScript that allows objects to inherit properties and methods from other objects.
+
+objects have a special hidden property [[Prototype]] (as named in the specification), that is either null or references another object. That object is called “a prototype”:
+
+`Note:` that **proto** is not the same as the internal [[Prototype]] property. It’s a getter/setter for [[Prototype]]. Later we’ll see situations where it matters, for now let’s just keep it in mind, as we build our understanding of JavaScript language.
 Example:
 
 ```javascript
