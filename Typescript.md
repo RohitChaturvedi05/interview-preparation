@@ -32,7 +32,7 @@ function greetUser(user) {
 }
 ```
 
-### <a>When should you use the unknown type?</a>
+### <a>When should you use the `unknown` type?</a>
 
 The `unknown` type is a safer alternative to `any`. It's best used when:
 
@@ -90,10 +90,9 @@ class Car implements Vehicle {
 
 You can create new types from existing interfaces using:
 
--   Pick utility type
--   Omit utility type
--   Partial utility type
--   Required utility type
+-   `Pick` utility type
+-   `Omit` utility type
+-   `Partial` utility type
 
 Example:
 
@@ -156,8 +155,9 @@ class Queue<T> {
 
 ### <a>What is the difference between union and intersection types?</a>
 
-Union types (|) represent values that can be one of several types, while intersection types (&) combine multiple types into one.
+`Union` types (`|`) represent values that can be one of several types. For example, a variable with type string | number can hold either a string or a number.
 
+`Intersection` types (`&`) combine multiple types into one, requiring an object to fulfill all the properties of each type. For example, if you have type A & B, the resulting type must have all properties from both A and B.
 Example:
 
 ```typescript
