@@ -1,9 +1,3 @@
-<style jsx>
-    .markdown-body h3 {
-        color: #4493f8;
-    }
-</style>
-
 ## Javascript interview Questions
 
 ## Basics & Data Types
