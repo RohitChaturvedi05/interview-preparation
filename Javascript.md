@@ -68,7 +68,7 @@ console.log(symbol1 == symbol2);
 
 ---
 
-## Functions & Scope`
+## Functions & Scope
 
 ### What is the difference between function declaration and function expression?
 
@@ -113,7 +113,44 @@ let y = 5;
 
 ### What is a closure in JavaScript, and why is it useful?
 
+A closure is a function that has access to variables from its outer (enclosing) function's scope chain, even after the outer function has returned. Closures are useful because they allow functions to maintain access to variables that were defined in a parent function, even after the parent function has finished executing.
+Example:
+
+```javascript
+function outerFunction() {
+    let outerVariable = 'Hello';
+    function innerFunction() {
+        console.log(outerVariable);
+        return innerFunction;
+    }
+    return innerFunction;
+}
+const closure = outerFunction();
+closure(); // Output: Hello
+```
+
 ### How does lexical scoping work in JavaScript?
+
+Lexical scoping refers to the way in which variables are resolved in nested functions. In JavaScript, the scope of a variable is determined by its position in the source code, and variables defined in an outer function are accessible within inner functions, but not vice versa.
+Example:
+
+```javascript
+function outerFunction() {
+    let outerVariable = 'I am outside!';
+
+    function innerFunction() {
+        console.log(outerVariable); // Can access outerVariable
+    }
+
+    innerFunction();
+}
+
+outerFunction(); // Output: I am outside!
+```
+
+-   `outerFunction` defines a variable `outerVariable`.
+-   `innerFunction` is nested inside `outerFunction` and has access to `outerVariable` due to lexical scoping.
+-   When `innerFunction` is called, it can access and log `outerVariable` even though `outerVariable` is defined in the outer function.
 
 ### What is the difference between `synchronous` and `asynchronous` functions?
 
@@ -194,7 +231,84 @@ console.log(rabbit.jumps); // true
 
 ### How does `Object.create()` work?
 
+The `Object.create()` method in JavaScript is used to create a new object with a specified prototype object and properties. It allows you to set the prototype of the new object to an existing object, enabling inheritance of properties and methods.
+Example:
+
+```javascript
+// Define a prototype object
+const personPrototype = {
+    greet: function () {
+        console.log(`Hello, my name is ${this.name}`);
+    },
+};
+
+// Create a new object with personPrototype as its prototype
+const person = Object.create(personPrototype);
+person.name = 'John';
+person.greet(); // Output: Hello, my name is John
+
+// Verify the prototype
+console.log(Object.getPrototypeOf(person) === personPrototype); // true
+```
+
 ### What is the difference between `Object.freeze()`, `Object.seal()`, and `Object.assign()`?
+
+`Object.freeze()` Object.freeze() is used to make an object immutable. Once an object is frozen, you cannot add, remove, or modify its properties.
+It provides shallow immutability, meaning nested objects are not frozen.
+
+Example:
+
+```javascript
+const obj = {
+    name: 'John',
+    age: 30,
+};
+
+Object.freeze(obj);
+
+obj.age = 31; // This will not change the age property
+obj.address = '123 Street'; // This will not add a new property
+
+console.log(obj); // Output: { name: 'John', age: 30 }
+```
+
+`Object.seal()` is used to prevent new properties from being added to an object and existing properties from being removed. However, you can still modify the values of existing properties. Like Object.freeze(), it provides shallow sealing.
+
+Example:
+
+```javascript
+const obj = {
+    name: 'John',
+    age: 30,
+};
+
+Object.seal(obj);
+
+obj.age = 31; // This will change the age property
+delete obj.name; // This will not delete the name property
+obj.address = '123 Street'; // This will not add a new property
+
+console.log(obj); // Output: { name: 'John', age: 31 }
+```
+
+Object.assign() is used to copy the values of all enumerable own properties from one or more source objects to a target object. It returns the target object.
+
+Example:
+
+```javascript
+const target = {
+    name: 'John',
+};
+
+const source = {
+    age: 30,
+    address: '123 Street',
+};
+
+Object.assign(target, source);
+
+console.log(target); // Output: { name: 'John', age: 30, address: '123 Street' }
+```
 
 ### What is an immutable object?
 
@@ -224,15 +338,103 @@ const person = Object.freeze({
 
 ### How can you deep clone an object in JavaScript?
 
+Deep cloning an object in JavaScript involves creating a new object with the same structure and values as the original object. This is useful when you want to create a copy of an object that is independent of the original, especially when dealing with nested objects or arrays.
+
+-   Using JSON.parse() and JSON.stringify()
+    This method is simple but has limitations, such as not handling functions, undefined, Infinity, NaN, and circular references.
+    ```javascript
+    const original = {
+        name: 'John',
+        age: 30,
+        address: {
+            city: 'New York',
+            zip: '10001',
+        },
+    };
+    ```
+-   Using a Recursive Function: This method handles more complex cases, including nested objects and arrays.
+
+    ```javascript
+    function deepClone(obj) {
+        if (obj === null || typeof obj !== 'object') {
+            return obj;
+        }
+
+        if (Array.isArray(obj)) {
+            const arrCopy = [];
+            for (let i = 0; i < obj.length; i++) {
+                arrCopy[i] = deepClone(obj[i]);
+            }
+            return arrCopy;
+        }
+
+        const objCopy = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                objCopy[key] = deepClone(obj[key]);
+            }
+        }
+        return objCopy;
+    }
+
+    const original = {
+        name: 'John',
+        age: 30,
+        address: {
+            city: 'New York',
+            zip: '10001',
+        },
+    };
+
+    const clone = deepClone(original);
+    console.log(clone); // { name: 'John', age: 30, address: { city: 'New York', zip: '10001' } }
+
+    const clone = JSON.parse(JSON.stringify(original));
+    console.log(clone); // { name: 'John', age: 30, address: { city: 'New York', zip: '10001' } }
+    ```
+
 ### What are getters and setters in JavaScript, and how do you use them?
+
+Getters and setters in JavaScript are special methods that provide a way to access and update the properties of an object. They allow you to define custom behavior when getting or setting a property value.
+
+`Getters`: Getters are methods that get the value of a specific property. They are defined using the get keyword.
+
+`Setters`: Setters are methods that set the value of a specific property. They are defined using the set keyword.
+
+Example:
+
+```javascript
+const person = {
+    firstName: 'John',
+    lastName: 'Doe',
+
+    // Getter for fullName
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`;
+    },
+
+    // Setter for fullName
+    set fullName(name) {
+        const [first, last] = name.split(' ');
+        this.firstName = first;
+        this.lastName = last;
+    },
+};
+
+// Using the getter
+console.log(person.fullName); // Output: John Doe
+
+// Using the setter
+person.fullName = 'Jane Smith';
+console.log(person.firstName); // Output: Jane
+console.log(person.lastName); // Output: Smith
+```
 
 ---
 
 ## Advanced JavaScript Concepts
 
 ## Event Loop & Asynchronous JavaScript
-
----
 
 ### How does the JavaScript event loop work?
 
@@ -247,8 +449,6 @@ const person = Object.freeze({
 ---
 
 ## Closures & Higher-Order Functions
-
----
 
 ### What is a closure, and how does it work?
 
