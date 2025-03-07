@@ -2,7 +2,27 @@
 
 ## Basics & Data Types
 
-### What are the differences between var, let, and const?
+### What are the different data types in JavaScript?
+
+-   Number
+-   String
+-   Boolean
+-   Null
+-   Undefined
+-   Object
+-   Array
+
+### What is the difference between `null` and `undefined`?
+
+`null` is an assignment value. It can be assigned to a variable as a representation of no value.
+
+### How does JavaScript handle type coercion?
+
+### What is the difference between `==` and `===` in JavaScript?
+
+`==` and `===` are both comparison operators. The difference between both of them is that == is used to compare values whereas === is used to compare both value and types.
+
+### Explain the difference between `let`, `const`, and `var`.
 
 | Feature              | var                                | let                               | const                           |
 | -------------------- | ---------------------------------- | --------------------------------- | ------------------------------- |
@@ -22,16 +42,6 @@ let y = 1;
 const z = 1;
 // z = 2; // Error: cannot reassign
 ```
-
-### What are the different data types in JavaScript?
-
-### What is the difference between `null` and `undefined`?
-
-### How does JavaScript handle type coercion?
-
-### What is the difference between `==` and `===` in JavaScript?
-
-### Explain the difference between `let`, `const`, and `var`.
 
 ### How we could ensure our compatibility with all browsers?
 
@@ -60,6 +70,24 @@ console.log(symbol1 == symbol2);
 
 ## Functions & Scope`
 
+### What is the difference between function declaration and function expression?
+
+`Function declaration`: A function declaration defines a named function and is hoisted to the top of its scope.
+
+```javascript
+function greet(name) {
+    console.log('Hello, ' + name + '!');
+}
+```
+
+`Function expression`: A function expression defines a function as a value assigned to a variable.
+
+```javascript
+const greet = function (name) {
+    console.log('Hello, ' + name + '!');
+};
+```
+
 ### What is "hoisting" in JavaScript?
 
 Hoisting is JavaScript's default behavior of moving declarations to the top of their scope during compilation. This means that regardless of where variables and functions are declared in the code, they are treated as if they are declared at the beginning of their scope.
@@ -83,15 +111,14 @@ x = 5;
 let y = 5;
 ```
 
-### What is the difference between function declaration and function expression?
-
-### How does JavaScript handle function hoisting?
-
 ### What is a closure in JavaScript, and why is it useful?
 
 ### How does lexical scoping work in JavaScript?
 
-### What is the difference between synchronous and asynchronous functions?
+### What is the difference between `synchronous` and `asynchronous` functions?
+
+`synchronous` functions are executed immediately, while asynchronous functions are executed later.
+`asynchronous` functions are used for tasks that may take a long time to complete, such as making API requests or reading from a file.
 
 ### What is function\* in JavaScript ?
 
