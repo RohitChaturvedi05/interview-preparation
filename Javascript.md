@@ -1,5 +1,4 @@
-<html>
-<h1 style="color:red" >Javascript interview Questions</h1>
+# Javascript interview Questions
 
 ## Basics & Data Types
 
@@ -18,6 +17,8 @@
 `null` is an assignment value. It can be assigned to a variable as a representation of no value.
 
 ### How does JavaScript handle type coercion?
+
+JavaScript is a dynamically typed language, which means that data types of variables are determined by the value they hold at runtime and can change throughout the program as we assign different values to them.
 
 ### What is the difference between `==` and `===` in JavaScript?
 
@@ -625,35 +626,167 @@ button.addEventListener('click', function () {
 
 ### What are the different ways to bind `this` in JavaScript?
 
-### How do `call()`, `apply()`, and `bind()` methods work?
+this can be bound to a specific object using the following methods:
+
+1. `bind()`: Creates a new function with a specified this value and arguments.
+2. `call()`: Calls a function with a specified this value and arguments.
+3. `apply()`: Calls a function with a specified this value and an array of arguments.
 
 ### How does arrow function handle `this` differently from regular functions?
 
+Arrow functions do not have their own this value. Instead, they inherit the this value from the enclosing lexical context.
+Example:
+
+```javascript
+const obj = {
+    name: 'John',
+    greet: function () {
+        setTimeout(() => {
+            console.log(`Hello, ${this.name}!`);
+        }, 10);
+    },
+};
+obj.greet(); // "Hello, John!"
+```
+
 ### What is the difference between implicit and explicit binding in JavaScript?
+
+Implicit binding: When a method is called on an object, the `this` keyword is implicitly bound to that object.
+
+Explicit binding: When a function is called using call(), apply(), or bind(), the this keyword is explicitly set to a specific value.
 
 ## Object-Oriented JavaScript
 
 ### What is the difference between a class and a constructor function in JavaScript?
 
+| Features            | Class                                           | Constructor Function                          |
+| ------------------- | ----------------------------------------------- | --------------------------------------------- |
+| Syntax              | `class ClassName { ... }`                       | `function ConstructorFunction() { ... }`      |
+| Constructor         | Automatically called when creating an instance  | Must be called explicitly                     |
+| Instance creation   | `const instance = new ClassName();`             | `const instance = new ConstructorFunction();` |
+| Methods             | Can define methods directly in                  |
+| the class           | Methods must be defined outside the constructor |
+| Inheritance         | Supports single inheritance                     | Supports single inheritance                   |
+| Static members      | Supported                                       | Not supported                                 |
+| Private members     | Not supported                                   | Not supported                                 |
+| Getters and setters | Supported                                       | Not supported                                 |
+
 ### How do you implement inheritance using JavaScript classes?
+
+Inheritance in JavaScript can be achieved using the `extends` keyword. Here's an example:
+
+```javascript
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    eat() {
+        console.log(`${this.name} eats.`);
+    }
+}
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name);
+        this.breed = breed;
+    }
+    bark() {
+        console.log(`${this.name} barks!`);
+    }
+}
+const dog = new Dog('Buddy', 'Golden Retriever');
+dog.bark(); // "Buddy barks!"
+dog.eat(); // "Buddy eats."
+```
 
 ### What is the difference between static and instance methods in JavaScript?
 
+`Static` methods are methods that are called directly on the class itself, without creating an instance of the class. They are often used for utility functions or constants.
+
+`Instance` methods are methods that are called on an instance of a class. They have access to the instance's properties and methods.
+
+Example:
+
+```javascript
+class MathUtils {
+    static PI = 3.14;
+    static add(a, b) {
+        return a + b;
+    }
+    multiply(a, b) {
+        return a * b;
+    }
+}
+console.log(MathUtils.PI); // 3.14
+console.log(MathUtils.add(2, 3)); // 5
+const mathUtils = new MathUtils();
+console.log(mathUtils.multiply(2, 3)); // 6
+```
+
 ### How does method overriding work in JavaScript?
 
+Method overriding allows a subclass to provide a different implementation of a method that is already defined in its parent class.
+
+```javascript
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    speaks() {}
+}
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name);
+        this.breed = breed;
+    }
+    speaks() {
+        console.log(`${this.name} barks!`);
+    }
+}
+const dog = new Dog('Buddy', 'Golden Retriever');
+dog.speaks(); // "Buddy barks!"
+```
+
 ### What is the role of the `super` keyword in JavaScript classes?
+
+The `super` keyword is used to call the constructor of the parent class. It can also be used to call methods of the parent class.
 
 ## Memory Management & Performance Optimization
 
 ### What are memory leaks in JavaScript, and how can you prevent them?
 
+Memory leaks occur when unused memory is not properly released, leading to a gradual increase in memory usage over time. To prevent memory leaks, you can:
+
+-   Avoid creating global variables.
+-   Clean up event listeners when they are no longer needed.
+-   Use garbage collection mechanisms provided by the JavaScript engine.
+
+### What is the difference between garbage collection and memory management in JavaScript?
+
+`Garbage` collection is the process by which the JavaScript engine automatically manages memory by identifying and releasing unused memory.
+
+`Memory management`, on the other hand, involves manually allocating and deallocating memory using constructs like `new` and `delete`.
+
 ### How does garbage collection work in JavaScript?
+
+Garbage collection in JavaScript is handled by the JavaScript engine, which periodically runs a garbage collection algorithm to identify and release unused memory. The garbage collection algorithm identifies objects that are no longer reachable by the program and frees up their memory. The garbage collection algorithm is implemented differently in different JavaScript engines, but the general idea is to identify objects that are no longer reachable by the program and free up their memory.
 
 ### What are weak references in JavaScript, and when should you use them?
 
+Weak references are a type of reference that does not prevent an object from being garbage collected.
+They are useful when you want to associate an object with another object without preventing the original object from being garbage collected.
+
 ### How does JavaScript optimize function execution using inline caching?
 
+JavaScript engines use inline caching to optimize function execution. When a function is called, the engine checks if it has already been called with the same arguments before. If so, it can skip the function call and use the cached result.
+
 ### How can you improve JavaScript performance when working with large data sets?
+
+To improve JavaScript performance when working with large data sets, you can:
+
+-   Use efficient data structures like arrays and objects.
+-   Minimize the number of operations performed on large data sets.
+-   Use lazy loading techniques to load data only when needed.
+-   Use parallel processing techniques to process large data sets in parallel.
 
 ### What is debouncing and throttling?
 
@@ -696,72 +829,452 @@ function throttle(func, limit) {
 
 ### What are ES6 modules, and how do they work?
 
+ES6 modules are a way to organize and reuse JavaScript code in a modular way. They allow you to split your code into separate files, each containing a module. Modules can be imported and exported between different files, allowing you to reuse code across your application.
+
+```javascript
+// module.js
+export function add(a, b) {
+    return a + b;
+}
+// main.js
+import { add } from './module.js';
+console.log(add(2, 3)); // Output: 5
+```
+
 ### What is the difference between default and named exports?
+
+`default export`: allows only one default export per module and can be imported without specifying the name.
+`named export`: allows multiple named exports per module and must be imported with the specified name.
 
 ### How does the Module Pattern work in JavaScript?
 
+The Module Pattern is a design pattern used to encapsulate and organize code into reusable modules. It allows you to create private and public variables and functions, and provides a way to expose only the necessary functionality to the outside world.
+
 ### What is the difference between CommonJS and ES6 modules?
 
+`CommonJS`: used in Node.js and older browsers. Uses `require()` and `module.exports`.
+`ES6 modules`: used in modern browsers and Node.js. Uses `import` and `export`.
+
 ### What are some common JavaScript design patterns, and when should they be used?
+
+`Singleton`: used to ensure that only one instance of a class is created.
+
+```javascript
+class Singleton {
+    constructor() {
+        if (!Singleton.instance) {
+            Singleton.instance = this;
+            return Singleton.instance;
+        }
+        return Singleton.instance;
+    }
+}
+const instance1 = new Singleton();
+const instance2 = new Singleton();
+console.log(instance1 === instance2); // Output: true
+```
+
+`Observer`: used to notify multiple objects when a change occurs.
+
+```javascript
+// Observer Pattern
+class Subject {
+    constructor() {
+        this.observers = [];
+    }
+
+    subscribe(observer) {
+        this.observers.push(observer);
+    }
+
+    notify(data) {
+        this.observers.forEach((observer) => observer.update(data));
+    }
+}
+```
+
+`Factory`: used to create objects without specifying the exact class of the object that will be created.
+
+```javascript
+// Factory Pattern
+class CarFactory {
+    createCar(type) {
+        switch (type) {
+            case 'sedan':
+                return new Sedan();
+            case 'suv':
+                return new SUV();
+        }
+    }
+}
+```
+
+`Decorator`: used to add new functionality to an object without changing its structure.
+
+```javascript
+// Decorator Pattern
+class Coffee {
+    cost() {
+        return 5;
+    }
+}
+
+class MilkDecorator {
+    constructor(coffee) {
+        this.coffee = coffee;
+    }
+
+    cost() {
+        return this.coffee.cost() + 2;
+    }
+}
+```
+
+`Strategy`: used to define a family of algorithms, encapsulate each one, and make them interchangeable.
+
+```javascript
+// Strategy Pattern
+class PaymentStrategy {
+    constructor(strategy) {
+        this.strategy = strategy;
+    }
+
+    pay(amount) {
+        return this.strategy.pay(amount);
+    }
+}
+
+const creditCardStrategy = {
+    pay: (amount) => `Paid ${amount} using credit card`,
+};
+```
+
+`MVC`: used to separate the application into three interconnected parts: the model, the view, and the controller.
+
+```javascript
+// MVC Pattern
+class Model {
+    constructor() {
+        this.data = null;
+    }
+    setData(data) {
+        this.data = data;
+    }
+    getData() {
+        return this.data;
+    }
+}
+
+class View {
+    render(data) {
+        console.log(`Rendering: ${data}`);
+    }
+}
+
+class Controller {
+    constructor(model, view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    updateView() {
+        this.view.render(this.model.getData());
+    }
+}
+```
 
 ## DOM Manipulation & Events
 
 ### How does event delegation work in JavaScript?
 
+Event delegation is a technique in JavaScript where a single event listener is attached to a parent element, and events are handled on the child elements based on their event type.
+
 ### What is the difference between `target` and `currentTarget` in event handling?
+
+`target`: The element that triggered the event.
+`currentTarget`: The element that the event listener is attached to.
 
 ### What are event capturing and event bubbling in JavaScript?
 
+`Event capturing`: The event starts from the top of the DOM tree and moves down to the target element.
+`Event bubbling`: The event starts from the target element and moves up to the top of the DOM tree.
+`Event delegation`: A technique in JavaScript where a single event listener is attached to a parent element, and events are handled on the child elements based on their event type.
+
 ### How do you remove an event listener in JavaScript?
 
+```javascript
+const element = document.getElementById('myElement');
+element.removeEventListener(event, function, useCapture);
+```
+
 ### What are `MutationObserver` and `IntersectionObserver`, and how do they work?
+
+`MutationObserver`: A JavaScript API that allows you to observe changes to the DOM tree and respond to those changes.
+`IntersectionObserver`: A JavaScript API that allows you to observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
 
 ## Error Handling & Debugging
 
 ### How does JavaScript handle errors using try-catch?
 
+```javascript
+function myFunction() {
+    try {
+    // Code that may throw an error
+    catch (error) {
+        // Code to handle the error
+    }
+    }
+};
+```
+
 ### What is the difference between `throw` and `console.error()`?
+
+`throw`: Used to throw an error.
+`console.error()`: Used to log an error to the console.
 
 ### What is the purpose of the `finally` block in JavaScript?
 
+The `finally` block is used to execute code after a try-catch block, regardless of whether an error was thrown or not.
+
+```javascript
+ try {
+    // Code that may throw an error
+    catch (error) {
+        // Code to handle the error
+        finally {
+            // Code that will always be executed
+        }
+    }
+ }
+```
+
 ### How can you create a custom error in JavaScript?
 
-### What are some best practices for debugging JavaScript code?
-
-## Data Structures & Algorithms
-
-### How do you implement a stack in JavaScript?
-
-### How do you implement a queue using JavaScript?
-
-### What is the difference between `map`, `filter`, and `reduce`?
-
-### How do you remove duplicates from an array in JavaScript?
-
-### What is the best way to find the largest/smallest number in an array?
-
+```javascript
+class CustomError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'CustomError';
+        this.message = message;
+    }
+}
+throw new CustomError('This is a custom error');
+```
 ## Modern JavaScript Features
 
 ### What are template literals, and how do they work?
 
+Template literals are string literals that allow embedded expressions and multiline strings. They use backticks (`) instead of quotes.
+
+```javascript
+const name = 'John';
+const greeting = `Hello ${name}!
+This is a multiline string.`;
+```
+
 ### How does optional chaining (`?.`) work in JavaScript?
+
+Optional chaining allows you to safely access nested object properties without causing an error if an intermediate property is null or undefined.
+
+```javascript
+const user = {
+    address: {
+        street: 'Main St',
+    },
+};
+console.log(user?.address?.street); // 'Main St'
+console.log(user?.contact?.phone); // undefined
+```
 
 ### What is the purpose of the `??` (nullish coalescing) operator?
 
+The nullish coalescing operator provides a way to specify a default value when a value is null or undefined.
+
+```javascript
+const value = null;
+const defaultValue = value ?? 'default'; // 'default'
+const zero = 0 ?? 42; // 0
+```
+
 ### What are the benefits of using `BigInt` in JavaScript?
 
+BigInt allows you to work with numbers larger than 2^53-1, which is the largest number JavaScript can reliably represent with the Number primitive.
+
+```javascript
+const bigNumber = 9007199254740991n;
+const result = bigNumber + 1n;
+```
+
 ### How do private class fields work in JavaScript?
+
+Private class fields are declared with a # prefix and are only accessible within the class.
+
+```javascript
+class Example {
+    #privateField = 'private';
+
+    getPrivateField() {
+        return this.#privateField;
+    }
+}
+```
 
 ## Security & Best Practices
 
 ### How can you prevent Cross-Site Scripting (XSS) in JavaScript?
 
+-   Sanitize user input
+-   Use Content Security Policy
+-   Encode output
+-   Use modern frameworks that automatically escape content
+
+```javascript
+function sanitizeHTML(str) {
+    return str.replace(/[&<>"']/g, function(match) {
+        const escape = {
+            '&': '&',
+            '<': '<',
+            '>': '>',
+            '"': '"',
+            "'": '''
+        };
+        return escape[match];
+    });
+}
+```
+
 ### What are some common security vulnerabilities in JavaScript applications?
+
+1. Cross-Site Scripting (XSS)
+2. Cross-Site Request Forgery (CSRF)
+3. Insecure Dependencies
+4. DOM-based vulnerabilities
+5. Injection attacks
 
 ### How does Content Security Policy (CSP) help secure JavaScript applications?
 
+CSP is a security layer that helps detect and prevent attacks like XSS by specifying which resources can be loaded and executed.
+
+```html
+<meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'"
+/>
+```
+
 ### How do you safely handle user input in JavaScript?
+
+1. Validate input on both client and server side
+2. Sanitize input before processing
+3. Use input type validation
+4. Implement proper error handling
+
+```javascript
+function validateInput(input) {
+    const sanitized = sanitizeHTML(input);
+    if (sanitized.length < 3) throw new Error('Input too short');
+    return sanitized;
+}
+```
 
 ### What are some best practices for writing maintainable JavaScript code?
 
-</html>
+1. Use consistent naming conventions
+2. Write modular code
+3. Comment your code appropriately
+4. Follow SOLID principles
+5. Use proper error handling
+6. Write tests
+
+## Data Structures & Algorithms
+
+### How do you implement a stack in JavaScript?
+
+```javascript
+class Stack {
+    constructor() {
+        this.items = [];
+    }
+
+    push(element) {
+        this.items.push(element);
+    }
+
+    pop() {
+        return this.items.pop();
+    }
+
+    peek() {
+        return this.items[this.items.length - 1];
+    }
+
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+```
+
+### How do you implement a queue using JavaScript?
+
+```javascript
+class Queue {
+    constructor() {
+        this.items = [];
+    }
+
+    enqueue(element) {
+        this.items.push(element);
+    }
+
+    dequeue() {
+        return this.items.shift();
+    }
+
+    front() {
+        return this.items[0];
+    }
+
+    isEmpty() {
+        return this.items.length === 0;
+    }
+}
+```
+
+### What is the difference between `map`, `filter`, and `reduce`?
+
+-   `map`: Creates a new array by transforming each element
+-   `filter`: Creates a new array with elements that pass a test
+-   `reduce`: Reduces an array to a single value
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+
+const doubled = numbers.map((x) => x * 2); // [2, 4, 6, 8, 10]
+const evens = numbers.filter((x) => x % 2 === 0); // [2, 4]
+const sum = numbers.reduce((acc, curr) => acc + curr, 0); // 15
+```
+
+### How do you remove duplicates from an array in JavaScript?
+
+```javascript
+// Using Set
+const array = [1, 2, 2, 3, 3, 4, 5, 5];
+const unique = [...new Set(array)]; // [1, 2, 3, 4, 5]
+
+// Using filter
+const unique2 = array.filter((item, index) => array.indexOf(item) === index);
+```
+
+### What is the best way to find the largest/smallest number in an array?
+
+```javascript
+const numbers = [1, 5, 2, 8, 3, 9];
+
+// Using Math.max/min
+const largest = Math.max(...numbers); // 9
+const smallest = Math.min(...numbers); // 1
+
+// Using reduce
+const largest2 = numbers.reduce((max, curr) => Math.max(max, curr));
+const smallest2 = numbers.reduce((min, curr) => Math.min(min, curr));
+```
