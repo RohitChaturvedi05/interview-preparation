@@ -1,4 +1,4 @@
-# Interview Questions Repository
+# Interview Questions
 
 This repository contains a comprehensive collection of interview questions and answers for various programming languages and web development topics. It is designed to help you prepare for technical interviews and improve your understanding of key concepts.
 
