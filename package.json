@@ -1,0 +1,21 @@
+{
+  "name": "interview-questions",
+  "version": "1.0.0",
+  "description": "This repository contains a comprehensive collection of interview questions and answers for various programming languages and web development topics. It is designed to help you prepare for technical interviews and improve your understanding of key concepts.",
+  "homepage": "https://github.com/RohitChaturvedi05/interview-questions#readme",
+  "bugs": {
+    "url": "https://github.com/RohitChaturvedi05/interview-questions/issues"
+  },
+  "scripts": {
+    "update:readme": "node ./scripts/update-readme.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RohitChaturvedi05/interview-questions.git"
+  },
+  "devDependencies": {},
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js"
+}

@@ -1060,6 +1060,7 @@ class CustomError extends Error {
 }
 throw new CustomError('This is a custom error');
 ```
+
 ## Modern JavaScript Features
 
 ### What are template literals, and how do they work?
