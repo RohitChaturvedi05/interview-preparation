@@ -1,9 +1,5 @@
 <html>
-<style type="text/css">
-    body h3 { color:"red" }
-</style>
-<head>Javascript interview Questions</head>
-<h1>Javascript interview Questions</h1>
+<h1 style="color:red" >Javascript interview Questions</h1>
 
 ## Basics & Data Types
 
