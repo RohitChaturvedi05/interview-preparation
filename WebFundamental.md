@@ -79,6 +79,8 @@ SOLID principles are guidelines for writing maintainable and scalable code:
 -   **I**nterface Segregation Principle
 -   **D**ependency Inversion Principle
 
+    <img src="./assets/solid.png" alt="SOLID Principles" width="600" height="300"/>
+
 ### How does the Single Responsibility Principle (SRP) improve code maintainability?
 
 SRP states that a class should have only one reason to change. It improves readability, reduces dependencies, and simplifies debugging.
@@ -145,7 +147,3 @@ Cross-Origin Resource Sharing (CORS) controls how resources are shared between d
 -   Use authentication and authorization (OAuth, JWT)
 -   Implement rate limiting
 -   Encrypt sensitive data
-
----
-
-This document provides detailed explanations for Web Fundamentals, including performance optimization, SOLID principles, SEO, and security. Let me know if you need additional topics! 🚀
