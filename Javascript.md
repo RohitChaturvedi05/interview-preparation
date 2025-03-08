@@ -1,4 +1,9 @@
-## Javascript interview Questions
+<html>
+<style type="text/css">
+    body h3 { color:"red" }
+</style>
+<head>Javascript interview Questions</head>
+<h1>Javascript interview Questions</h1>
 
 ## Basics & Data Types
 
@@ -24,11 +29,11 @@
 
 ### Explain the difference between `let`, `const`, and `var`.
 
-| Feature              | var                                | let                               | const                           |
-| -------------------- | ---------------------------------- | --------------------------------- | ------------------------------- |
-| Scope                | Function-scoped or globally-scoped | Block-scoped                      | Block-scoped                    |
-| Redeclaration/Update | Can be redeclared and updated      | Can be updated but not redeclared | Cannot be updated or redeclared |
-| Hoisting             | Hoisted to the top of its scope    | Not hoisted                       | Not hoisted                     |
+| Feature | var | let | const |
+| -- | - | | - |
+| Scope | Function-scoped or globally-scoped | Block-scoped | Block-scoped |
+| Redeclaration/Update | Can be redeclared and updated | Can be updated but not redeclared | Cannot be updated or redeclared |
+| Hoisting | Hoisted to the top of its scope | Not hoisted | Not hoisted |
 
 Example:
 
@@ -65,8 +70,6 @@ let symbol2 = Symbol('Jhon');
 // Each time Symbol() method // is used to create new global // Symbol
 console.log(symbol1 == symbol2);
 ```
-
----
 
 ## Functions & Scope
 
@@ -202,8 +205,6 @@ for (const item of obj) {
 // 2
 // 3
 ```
-
----
 
 ## Objects & Prototypes
 
@@ -430,8 +431,6 @@ console.log(person.firstName); // Output: Jane
 console.log(person.lastName); // Output: Smith
 ```
 
----
-
 ## Advanced JavaScript Concepts
 
 ## Event Loop & Asynchronous JavaScript
@@ -445,8 +444,6 @@ console.log(person.lastName); // Output: Smith
 ### Explain the difference between `Promise.all()`, `Promise.allSettled()`, `Promise.race()`, and `Promise.any()`.
 
 ### How does async/await work internally?
-
----
 
 ## Closures & Higher-Order Functions
 
@@ -638,8 +635,6 @@ button.addEventListener('click', function () {
 
 ### What is the difference between implicit and explicit binding in JavaScript?
 
----
-
 ## Object-Oriented JavaScript
 
 ### What is the difference between a class and a constructor function in JavaScript?
@@ -652,11 +647,7 @@ button.addEventListener('click', function () {
 
 ### What is the role of the `super` keyword in JavaScript classes?
 
----
-
 ## Memory Management & Performance Optimization
-
----
 
 ### What are memory leaks in JavaScript, and how can you prevent them?
 
@@ -705,8 +696,6 @@ function throttle(func, limit) {
 }
 ```
 
----
-
 ## Modules & Design Patterns
 
 ### What are ES6 modules, and how do they work?
@@ -718,8 +707,6 @@ function throttle(func, limit) {
 ### What is the difference between CommonJS and ES6 modules?
 
 ### What are some common JavaScript design patterns, and when should they be used?
-
----
 
 ## DOM Manipulation & Events
 
@@ -733,8 +720,6 @@ function throttle(func, limit) {
 
 ### What are `MutationObserver` and `IntersectionObserver`, and how do they work?
 
----
-
 ## Error Handling & Debugging
 
 ### How does JavaScript handle errors using try-catch?
@@ -746,8 +731,6 @@ function throttle(func, limit) {
 ### How can you create a custom error in JavaScript?
 
 ### What are some best practices for debugging JavaScript code?
-
----
 
 ## Data Structures & Algorithms
 
@@ -761,8 +744,6 @@ function throttle(func, limit) {
 
 ### What is the best way to find the largest/smallest number in an array?
 
----
-
 ## Modern JavaScript Features
 
 ### What are template literals, and how do they work?
@@ -774,8 +755,6 @@ function throttle(func, limit) {
 ### What are the benefits of using `BigInt` in JavaScript?
 
 ### How do private class fields work in JavaScript?
-
----
 
 ## Security & Best Practices
 
@@ -789,4 +768,4 @@ function throttle(func, limit) {
 
 ### What are some best practices for writing maintainable JavaScript code?
 
----
+</html>
