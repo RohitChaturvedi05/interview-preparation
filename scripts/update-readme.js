@@ -28,6 +28,7 @@ const generateSectionLinks = (filePath) => {
     const content = fs.readFileSync(filePath, 'utf-8');
     const lines = content.split('\n');
     const links = [];
+    const fileName = path.basename(filePath);
 
     lines.forEach((line) => {
         const match = line.match(/^##\s+(.*)/);
@@ -37,7 +38,7 @@ const generateSectionLinks = (filePath) => {
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/(^-|-$)/g, '');
-            links.push(`- [${section}](#${anchor})`);
+            links.push(`- [${section}](${fileName}#${anchor})`);
         }
     });
 
