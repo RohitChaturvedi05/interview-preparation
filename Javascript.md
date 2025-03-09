@@ -4,13 +4,17 @@
 
 ### What are the different data types in JavaScript?
 
--   Number
--   String
--   Boolean
--   Null
--   Undefined
--   Object
--   Array
+| Data Type | Description                                                         |
+| --------- | ------------------------------------------------------------------- |
+| Number    | Represents both integer and floating-point numbers.                 |
+| String    | Represents textual data.                                            |
+| Boolean   | Represents a logical entity and can have two values: true or false. |
+| Null      | Represents the intentional absence of any object value.             |
+| Undefined | Represents a variable that has not been assigned a value.           |
+| Object    | Represents a collection of properties.                              |
+| Array     | Represents an ordered collection of values.                         |
+| Function  | Represents a reusable block of code.                                |
+| Symbol    | Represents a unique and immutable value.                            |
 
 ### What is the difference between `null` and `undefined`?
 
@@ -453,6 +457,27 @@ console.log(person.lastName); // Output: Smith
 ### How does JavaScript handle callback functions?
 
 ### What is function currying, and how does it work?
+
+Currying is a technique in functional programming where a function with multiple arguments is transformed into a sequence of functions, each taking a single argument. This allows you to create specialized functions with fewer arguments.
+
+```javascript
+export const curryN = (fn, len = fn.length) => {
+    return function curried(...args) {
+        if (args.length >= len) {
+            return fn(...args);
+        }
+        return (...nextArgs) => curried(...args, ...nextArgs);
+    };
+};
+
+const sum = (a, b) => {
+    return a + b;
+};
+
+const curriedSum = curryN(sum);
+
+console.log(curriedSum(2)(3));
+```
 
 ### What are the differences between promises and async/await?
 
@@ -1241,6 +1266,70 @@ class Queue {
 }
 ```
 
+### How do you implement a linked list in JavaScript?
+
+```javascript
+// Node class for a linked list
+export class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+// LinkedList class with basic operations
+export class LinkedList {
+    constructor() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    // Add a node to the end of the list
+    append(data) {
+        const newNode = new Node(data);
+
+        if (!this.head) {
+            this.head = newNode;
+        } else {
+            let current = this.head;
+            while (current.next) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+
+        this.size++;
+        return this;
+    }
+
+    // Print the linked list (up to a limit to avoid infinite loops)
+    print(limit = 20) {
+        let current = this.head;
+        let count = 0;
+        let result = '';
+
+        while (current && count < limit) {
+            result += current.data + ' -> ';
+            current = current.next;
+            count++;
+
+            // Break if we've come back to the head (circular list)
+            if (current === this.head) {
+                result += '(back to head)';
+                break;
+            }
+        }
+
+        if (count === limit) {
+            result += '... (stopped to prevent infinite loop)';
+        } else if (!current) {
+            result += 'null';
+        }
+
+        console.log(result);
+    }
+}
+```
+
 ### What is the difference between `map`, `filter`, and `reduce`?
 
 -   `map`: Creates a new array by transforming each element
@@ -1291,4 +1380,261 @@ function reverseString(str) {
 const originalString = 'Hello, World!';
 const reversedString = reverseString(originalString);
 console.log(reversedString); // Output: "!dlroW ,olleH"
+```
+
+### How to chunks an array into smaller arrays of a specific size?
+
+```javascript
+const chunk = (arr, size) => {
+    let out = [];
+    for (let pos = 0; pos < arr.length; pos += size) {
+        out.push(arr.slice(pos, pos + size));
+    }
+    return out;
+};
+let array = [1, 2, 3, 4, 5, 6, 7];
+console.log(chunk(array, 3));
+/* Output:
+[[1, 2, 3], [4, 5, 6], [7]] */
+```
+
+### How to check if a string is a anagram of another string?
+
+```javascript
+const cleanUp = (str) => {
+    return str.replace(/\W/g, '').toLowerCase().split('').sort().join('');
+};
+
+const anagrams = (str1, str2) => {
+    return cleanUp(str1) === cleanUp(str2);
+};
+
+console.log(cleanUp('RAIL! SAFETY!'));
+console.log(anagrams('RAIL! SAFETY!', 'fairy tales')); // Output: true
+```
+
+### How to find the first non-repeating character in a string?
+
+```javascript
+function firstNonRepeatingChar(str) {
+    let map = {};
+    for (let char of str) {
+        map = {
+            ...map,
+            [char]: (map[char] ?? 0) + 1,
+        };
+    }
+    for (let char of str) {
+        if (map[char] === 1) return char;
+    }
+    return null;
+}
+
+console.log(firstNonRepeatingChar('aabbccddeefg')); // Output: "f"
+```
+
+### How to find most frequent char?
+
+```javascript
+export const mostFrequentChar = (str) => {
+    let map = {};
+    let maxChar = '';
+    let maxCount = 0;
+
+    for (const char of str) {
+        map = {
+            ...map,
+            [char]: (map[char] ?? 0) + 1,
+        };
+        if (map[char] > maxCount) {
+            maxChar = char;
+            maxCount = map[char];
+        }
+    }
+    // Object.entries(map).sort((a, b) => b[1] - a[1]);
+    return { maxChar, maxCount };
+};
+
+const input = 'ABBAAdBd5BBB';
+console.log(mostFrequentChar(input)); // Output: 'B'
+```
+
+### How to find apply bubble-sort algorithm?
+
+```javascript
+const bubbleSortRecursive = (arr) => {
+    let swapped = false;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > arr[i + 1]) {
+            [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+            swapped = true;
+        }
+    }
+    if (swapped) {
+        return bubbleSort(arr);
+    }
+    return arr;
+};
+
+const bubbleSort = (arr) => {
+    let swapped = false;
+    let n = arr.length;
+    do {
+        swapped = false;
+        for (let i = 0; i < n; i++) {
+            if (arr[i] > arr[i + 1]) {
+                [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+                swapped = true;
+            }
+        }
+        n--;
+    } while (swapped);
+
+    return arr;
+};
+
+let Input = [32, 12, 45, 54, 23, 11];
+
+console.log('bubbleSort', bubbleSort(Input));
+
+console.log('bubbleSortRecursive', bubbleSortRecursive(Input));
+```
+
+### How to find apply merge-sort algorithm?
+
+-   Merge Sort (O(n log n)) – Best for stability & large datasets
+-   Time Complexity:
+-   Worst: O(n log n)
+-   Average: O(n log n)
+-   Best: O(n log n)
+-   Space Complexity: O(n)
+-   Stable Sort: Yes ✅
+-   Good For: Large datasets, linked lists, stable sorting.
+
+```javascript
+const merge = (left, right) => {
+    const result = [];
+
+    while (left.length && right.length) {
+        result.push(left[0] < right[0] ? left.shift() : right.shift());
+    }
+
+    return [...result, ...left, ...right];
+};
+
+const mergeSort = (arr) => {
+    if (arr.length == 0 || arr.length == 1) return arr;
+
+    const mid = Math.ceil(arr.length / 2);
+
+    const left = mergeSort(arr.slice(0, mid));
+
+    const right = mergeSort(arr.slice(mid));
+
+    return merge(left, right);
+};
+
+let Input = [32, 12, 45, 54, 23, 11];
+
+console.log('mergeSort', mergeSort(Input));
+```
+
+### How to find apply quick-sort algorithm?
+
+-   Quick Sort (O(n log n)) – Best for in-place sorting & fast execution
+-   Time Complexity:
+-   Worst: O(n²) (rarely happens)
+-   Average: O(n log n)
+-   Best: O(n log n)
+-   Space Complexity: O(log n)
+-   Stable Sort: No ❌
+-   Good For: General use, large datasets, in-place sorting.
+
+```javascript
+const quickSort = (arr) => {
+    if (arr.length <= 1) return arr;
+    const piviot = arr[arr.length - 1];
+    const left = arr.filter((a) => a < piviot);
+    const right = arr.filter((a) => a > piviot);
+    const middle = arr.filter((a) => a === piviot);
+
+    return [...quickSort(left), ...middle, ...quickSort(right)];
+};
+
+let Input = [20, 56, 45, 89, 89, 90];
+console.log('quickSort', quickSort(Input));
+```
+
+### How to find apply selection sort algorithm?
+
+-   Time Complexity:
+    -   Worst: O(n²)
+    -   Average: O(n²)
+    -   Best: O(n²)
+-   Space Complexity: O(1)
+-   Stable Sort: ❌ No
+
+```javascript
+const selectionSort = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+            if (arr[i] > arr[j]) {
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+    }
+    return arr;
+};
+
+let Input = [32, 12, 45, 54, 23, 11];
+
+console.log('selectionSort', selectionSort(Input));
+```
+
+### How to use dutch national flag algorithm?
+
+-   Sorting three unique values O(n) time & O(1) space ✅
+-   Improving QuickSort on duplicate elements Reduces unnecessary swaps and recursion ✅
+-   Color sorting in graphics Sorts pixels in O(n) time ✅
+-   Partitioning three categories efficiently Single-pass partitioning ✅
+-
+-   🚫 When NOT to Use It?
+-   ❌ If the array does not have exactly three unique values, other sorting algorithms (like
+-   MergeSort or QuickSort) may be better.
+-   ❌ If the dataset is already nearly sorted, an insertion sort (O(n)) may work faster.
+
+```javascript
+const sort = (arr) => {
+    let low = 0;
+    let mid = 0;
+    let high = arr.length - 1;
+
+    while (mid <= high) {
+        if (arr[mid] === 0) {
+            [arr[low], arr[mid]] = [arr[mid], arr[low]];
+            low++;
+            mid++;
+        } else if (arr[mid] === 1) {
+            mid++;
+        } else {
+            [arr[mid], arr[high]] = [arr[high], arr[mid]];
+            high--;
+        }
+    }
+    return arr;
+};
+
+console.log(sort([0, 1, 2, 0, 1, 2]));
+
+/*
+Input: arr[] = [0, 1, 2, 0, 1, 2]
+Output: [0, 0, 1, 1, 2, 2]
+Explanation: 0s 1s and 2s are segregated into ascending order.
+Input: arr[] = [0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1]
+Output: [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2]
+Explanation: 0s 1s and 2s are segregated into ascending order.
+
+Follow up: Could you come up with a one-pass algorithm using only constant extra space?
+
+*/
 ```
