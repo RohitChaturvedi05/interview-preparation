@@ -12,7 +12,7 @@ This repository contains a comprehensive collection of interview questions and a
 
 ## Javascript
 
--   [Basics & Data Types](Javascript.md#basics--data-types)
+-   [Basics & Data Types](collection/Javascript.md#basics--data-types)
 -   [Functions & Scope](Javascript.md#functions--scope)
 -   [Objects & Prototypes](Javascript.md#objects--prototypes)
 -   [Advanced JavaScript Concepts](Javascript.md#advanced-javascript-concepts)
