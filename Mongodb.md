@@ -44,6 +44,22 @@ A collection is a group of MongoDB documents, similar to a table in relational d
 
 MongoDB stores data in collections as BSON (Binary JSON) documents.
 
+```json
+{
+    "_id": "1234567890",
+    "name": "John Doe",
+    "age": 30,
+    "email": "john@example.com"
+    "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "state": "CA",
+        "zip": "12345"
+    }
+    "hobbies": ["reading", "hiking", "coding"]
+}
+```
+
 ### What is BSON, and how does it relate to JSON?
 
 BSON is a binary representation of JSON, optimized for storage and speed. It supports more data types than JSON. BSON is used in MongoDB to store documents.
@@ -98,6 +114,7 @@ db.orders.aggregate([
     { $match: { status: 'shipped' } },
     { $group: { _id: '$customerId', total: { $sum: '$amount' } } },
 ]);
+// output: { _id: 123, total: 1000 }
 ```
 
 ### What is replication in MongoDB?
@@ -152,3 +169,89 @@ db.createUser({
 ```
 
 This document now includes detailed answers and code snippets for all MongoDB interview questions!
+
+### How to use mongoose to commit transaction with graphql?
+
+1. Define Mongoose Models
+
+```javascript
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: { type: String, unique: true },
+});
+
+const profileSchema = new mongoose.Schema({
+    userId: mongoose.Schema.Types.ObjectId,
+    age: Number,
+    bio: String,
+});
+
+const User = mongoose.model('User', userSchema);
+const Profile = mongoose.model('Profile', profileSchema);
+```
+
+2. GraphQL Schema Definition
+
+```javascript
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+type Profile {
+  id: ID!
+  userId: ID!
+  age: Int
+  bio: String
+}
+
+type Mutation {
+  createUser(name: String!, email: String!, age: Int, bio: String): User
+}
+```
+
+3. Resolver with Mongoose Transaction
+
+```javascript
+const resolvers = {
+    Mutation: {
+        createUser: async (_, { name, email, age, bio }) => {
+            const session = await mongoose.startSession();
+            session.startTransaction();
+
+            try {
+                // Step 1: Create User
+                const user = await User.create([{ name, email }], { session });
+
+                // Step 2: Create Profile linked to User
+                const profile = await Profile.create(
+                    [{ userId: user[0]._id, age, bio }],
+                    { session }
+                );
+
+                // Step 3: Commit Transaction
+                await session.commitTransaction();
+                session.endSession();
+
+                return user[0];
+            } catch (error) {
+                // Rollback Transaction on Error
+                await session.abortTransaction();
+                session.endSession();
+                throw new Error(`Transaction failed: ${error.message}`);
+            }
+        },
+    },
+};
+```
+
+**Key Points**
+
+-   We use mongoose.startSession() to start a transaction.
+-   The session is passed to all Mongoose operations to ensure atomicity.
+-   commitTransaction() is called if all operations succeed.
+-   If any operation fails, we call abortTransaction() to roll back changes.
+-   We end the session after completing the transaction.
