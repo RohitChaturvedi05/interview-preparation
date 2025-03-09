@@ -36,8 +36,11 @@ const generateSectionLinks = (filePath) => {
             const section = match[1];
             const anchor = section
                 .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '');
+                .replace(/[^a-z0-9&]+/g, '_') // Replace non-alphanumeric characters except '&' with underscores
+                .replace(/&/g, '--') // Replace '&' with double hyphens
+                .replace(/_+/g, '-') // Replace multiple underscores with a single hyphen
+                .replace(/(^-|-$)/g, '') // Remove leading or trailing hyphens
+                .replace(/----/g, '--'); // Replace '&' with double hyphens
             links.push(`- [${section}](${fileName}#${anchor})`);
         }
     });

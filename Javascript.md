@@ -1279,3 +1279,16 @@ const smallest = Math.min(...numbers); // 1
 const largest2 = numbers.reduce((max, curr) => Math.max(max, curr));
 const smallest2 = numbers.reduce((min, curr) => Math.min(min, curr));
 ```
+
+### How do you reverse a string in JavaScript?
+
+```javascript
+function reverseString(str) {
+    return str.split('').reverse().join('');
+}
+
+// Example usage:
+const originalString = 'Hello, World!';
+const reversedString = reverseString(originalString);
+console.log(reversedString); // Output: "!dlroW ,olleH"
+```
