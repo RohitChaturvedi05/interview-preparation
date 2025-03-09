@@ -120,6 +120,8 @@ db.orders.aggregate([
 ### What is replication in MongoDB?
 
 Replication ensures high availability by copying data across multiple servers.
+There are `primary`-secondary and replica-set configurations. Replica sets have a `primary` and multiple `secondaries`.
+The `primary` handles writes, and secondaries handle reads. `Secondaries` can become primaries if the `primary` fails.
 
 ### How does MongoDB handle transactions?
 
@@ -147,6 +149,7 @@ By using replica sets where one node acts as primary, and others as secondary.
 ### How does MongoDB handle ACID transactions?
 
 By ensuring transactions across multiple documents using session-based operations.
+<img src="./assets/acid-properties.png" alt="acid-properties" width="400" height="200">
 
 ### How does the `explain()` method help in query optimization?
 
