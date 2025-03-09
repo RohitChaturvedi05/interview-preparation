@@ -149,7 +149,7 @@ By using replica sets where one node acts as primary, and others as secondary.
 ### How does MongoDB handle ACID transactions?
 
 By ensuring transactions across multiple documents using session-based operations.
-<img src="./assets/acid-properties.png" alt="acid-properties" width="400" height="200">
+<img src="./assets/acid-properties.png" alt="acid-properties" width="500" height="500">
 
 ### How does the `explain()` method help in query optimization?
 
