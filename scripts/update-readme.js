@@ -54,7 +54,7 @@ const generateSectionLinks = (filePath) => {
     const content = fs.readFileSync(filePath, 'utf-8');
     const lines = content.split('\n');
     const links = [];
-    const fileName = path.basename(filePath);
+    const relativePath = path.relative(collectionPath, filePath);
 
     lines.forEach((line) => {
         const match = line.match(/^##\s+(.*)/);
@@ -67,7 +67,7 @@ const generateSectionLinks = (filePath) => {
                 .replace(/_+/g, '-') // Replace multiple underscores with a single hyphen
                 .replace(/(^-|-$)/g, '') // Remove leading or trailing hyphens
                 .replace(/----/g, '--'); // Replace '&' with double hyphens
-            links.push(`- [${section}](${fileName}#${anchor})`);
+            links.push(`- [${section}](collection/${relativePath}#${anchor})`);
         }
     });
 
