@@ -79,7 +79,7 @@ SOLID principles are guidelines for writing maintainable and scalable code:
 -   **I**nterface Segregation Principle
 -   **D**ependency Inversion Principle
 
-    <img src="./assets/solid.png" alt="SOLID Principles" width="600" height="300"/>
+    <img src="../assets/solid.png" alt="SOLID Principles" width="600" height="300"/>
 
 ### How does the Single Responsibility Principle (SRP) improve code maintainability?
 

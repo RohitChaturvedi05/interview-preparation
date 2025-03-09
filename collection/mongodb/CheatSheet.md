@@ -1,4 +1,4 @@
-## MongoDB Cheat sheet
+# MongoDB Cheat sheet
 
 ## Connecting to MongoDB
 

@@ -20,9 +20,35 @@ This repository is licensed under the MIT License.
 `;
 
 const readmePath = path.join(__dirname, '../README.md');
-const markdownFiles = fs
-    .readdirSync(path.join(__dirname, '../'))
-    .filter((file) => file.endsWith('.md') && file !== 'README.md');
+const collectionPath = path.join(__dirname, '../collection');
+
+const sectionOrder = [
+    'Javascript',
+    'Typescript',
+    'WebFundamental',
+    'Graphql',
+    'Mongodb',
+];
+
+const getMarkdownFiles = (dir) => {
+    const files = fs.readdirSync(dir);
+    let markdownFiles = [];
+
+    files.forEach((file) => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+
+        if (stat.isDirectory()) {
+            markdownFiles = markdownFiles.concat(getMarkdownFiles(filePath));
+        } else if (file.endsWith('.md')) {
+            markdownFiles.push(filePath);
+        }
+    });
+
+    return markdownFiles;
+};
+
+const markdownFiles = getMarkdownFiles(collectionPath);
 
 const generateSectionLinks = (filePath) => {
     const content = fs.readFileSync(filePath, 'utf-8');
@@ -48,6 +74,10 @@ const generateSectionLinks = (filePath) => {
     return links.join('\n');
 };
 
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
 const updateReadme = () => {
     let readmeContent = fs.readFileSync(readmePath, 'utf-8');
     const tableOfContentsStart = readmeContent.indexOf('## Table of Contents');
@@ -64,14 +94,58 @@ const updateReadme = () => {
     let newTableOfContents = '## Table of Contents\n\n';
     let newSections = '';
 
-    markdownFiles.forEach((file, index) => {
-        const sectionName = path.basename(file, '.md');
-        newTableOfContents += `${
-            index + 1
-        }. [${sectionName}](#${sectionName.toLowerCase()})\n`;
-        newSections += `\n## ${sectionName}\n\n${generateSectionLinks(
-            path.join(__dirname, '../', file)
-        )}\n`;
+    const sections = {};
+
+    markdownFiles.forEach((file) => {
+        const relativePath = path.relative(collectionPath, file);
+        const parts = relativePath.split(path.sep);
+
+        if (parts.length === 1) {
+            const sectionName = capitalizeFirstLetter(
+                path.basename(file, '.md')
+            );
+            sections[sectionName] = {
+                type: 'file',
+                filePath: file,
+                sectionName,
+            };
+        } else {
+            const folderName = capitalizeFirstLetter(parts[0]);
+            const fileName = capitalizeFirstLetter(path.basename(file, '.md'));
+
+            if (!sections[folderName]) {
+                sections[folderName] = {
+                    type: 'folder',
+                    files: [],
+                };
+            }
+
+            sections[folderName].files.push({
+                fileName,
+                filePath: file,
+            });
+        }
+    });
+
+    sectionOrder.forEach((sectionName) => {
+        if (sections[sectionName]) {
+            if (sections[sectionName].type === 'file') {
+                newTableOfContents += `- [${sectionName}](#${sectionName.toLowerCase()})\n`;
+                newSections += `\n## ${sectionName}\n\n${generateSectionLinks(
+                    sections[sectionName].filePath
+                )}\n`;
+            } else if (sections[sectionName].type === 'folder') {
+                newTableOfContents += `- [${sectionName}](#${sectionName.toLowerCase()})\n`;
+                newSections += `\n## ${sectionName}\n`;
+                sections[sectionName].files.forEach(
+                    ({ fileName, filePath }) => {
+                        newSections += `\n### ${fileName}\n\n${generateSectionLinks(
+                            filePath
+                        )}\n`;
+                    }
+                );
+            }
+        }
     });
 
     readmeContent =
