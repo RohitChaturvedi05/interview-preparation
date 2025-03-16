@@ -30,11 +30,11 @@ JavaScript is a dynamically typed language, which means that data types of varia
 
 ### Explain the difference between `let`, `const`, and `var`.
 
-| Feature | var | let | const |
-| -- | - | | - |
-| Scope | Function-scoped or globally-scoped | Block-scoped | Block-scoped |
-| Redeclaration/Update | Can be redeclared and updated | Can be updated but not redeclared | Cannot be updated or redeclared |
-| Hoisting | Hoisted to the top of its scope | Not hoisted | Not hoisted |
+| Feature              | var                                | let                               | const                           |
+| -------------------- | ---------------------------------- | --------------------------------- | ------------------------------- |
+| Scope                | Function-scoped or globally-scoped | Block-scoped                      | Block-scoped                    |
+| Redeclaration/Update | Can be redeclared and updated      | Can be updated but not redeclared | Cannot be updated or redeclared |
+| Hoisting             | Hoisted to the top of its scope    | Not hoisted                       | Not hoisted                     |
 
 Example:
 
@@ -653,9 +653,59 @@ button.addEventListener('click', function () {
 
 this can be bound to a specific object using the following methods:
 
-1. `bind()`: Creates a new function with a specified this value and arguments.
-2. `call()`: Calls a function with a specified this value and arguments.
-3. `apply()`: Calls a function with a specified this value and an array of arguments.
+1. `bind()`: The Bind() Method creates a new function and when that new function is called it set this keyword to the first argument which is passed to the bind method, and if any other sequences of arguments preceding the first argument are passed to the bind method then they are passed as an argument to the new function when the new function is called.
+
+```javascript
+let nameObj = {
+    name: 'Tony',
+};
+
+let PrintName = {
+    name: 'steve',
+    sayHi: function () {
+        // Here "this" points to nameObj
+        console.log(this.name);
+    },
+};
+
+let HiFun = PrintName.sayHi.bind(nameObj);
+HiFun(); // Tony
+```
+
+2. `call()`: The Call() Method calls the function directly and sets this to the first argument passed to the call method and if any other sequences of arguments preceding the first argument are passed to the call method then they are passed as an argument to the function.
+
+```javascript
+let nameObj = {
+    name: 'Tony',
+};
+
+let PrintName = {
+    name: 'steve',
+    sayHi: function (age) {
+        console.log(this.name + ' age is ' + age);
+    },
+};
+
+PrintName.sayHi.call(nameObj, 42);
+// Output: Tony age is 42
+```
+
+3. `apply()`: The Apply() Method calls the function directly and sets this to the first argument passed to the apply method and if any other arguments provided as an array are passed to the call method then they are passed as an argument to the function.
+
+```javascript
+let nameObj = {
+    name: 'Tony',
+};
+
+let PrintName = {
+    name: 'steve',
+    sayHi: function (...age) {
+        console.log(this.name + ' age is ' + age);
+    },
+};
+PrintName.sayHi.apply(nameObj, [42]);
+// Output: Tony age is 42
+```
 
 ### How does arrow function handle `this` differently from regular functions?
 
@@ -676,9 +726,9 @@ obj.greet(); // "Hello, John!"
 
 ### What is the difference between implicit and explicit binding in JavaScript?
 
-Implicit binding: When a method is called on an object, the `this` keyword is implicitly bound to that object.
+`Implicit binding`: When a method is called on an object, the `this` keyword is implicitly bound to that object.
 
-Explicit binding: When a function is called using call(), apply(), or bind(), the this keyword is explicitly set to a specific value.
+`Explicit binding`: When a function is called using call(), apply(), or bind(), the this keyword is explicitly set to a specific value.
 
 ## Object-Oriented JavaScript
 

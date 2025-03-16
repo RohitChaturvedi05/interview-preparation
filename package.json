@@ -1,17 +1,17 @@
 {
-  "name": "interview-questions",
+  "name": "interview-preparation",
   "version": "1.0.0",
   "description": "This repository contains a comprehensive collection of interview questions and answers for web development topics. It is designed to help you prepare for technical interviews and improve your understanding of key concepts.",
-  "homepage": "https://github.com/RohitChaturvedi05/interview-questions#readme",
+  "homepage": "https://github.com/RohitChaturvedi05/interview-preparation#readme",
   "bugs": {
-    "url": "https://github.com/RohitChaturvedi05/interview-questions/issues"
+    "url": "https://github.com/RohitChaturvedi05/interview-preparation/issues"
   },
   "scripts": {
     "update:readme": "node ./scripts/update-readme.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RohitChaturvedi05/interview-questions.git"
+    "url": "git+https://github.com/RohitChaturvedi05/interview-preparation.git"
   },
   "devDependencies": {},
   "license": "ISC",
@@ -23,6 +23,7 @@
     "questions",
     "answers",
     "programming",
+    "Preparations",
     "web development",
     "technical interview",
     "coding",
