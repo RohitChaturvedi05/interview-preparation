@@ -42,7 +42,8 @@ person1.greet();
 **Encapsulation** is the bundling of data (variables) and methods (functions) that manipulate the data into a single unit (class). It helps in hiding the internal implementation and exposing only necessary parts to the outside world.
 
 Encapsulation is defined as the wrapping up of data under a single unit. It is the mechanism that binds together code and the data it manipulates. In Encapsulation, the variables or data of a class are hidden from any other class and can be accessed only through any member function of their class in which they are declared. As in encapsulation, the data in a class is hidden from other classes, so it is also known as data-hiding.
-<img src="../assets/oops-encapsulation.png" alt="Encapsulation" height="300"  width="300"/>
+
+<img src="../assets/oops-encapsulation.png" alt="Encapsulation" height="300"  width="500"/>
 
 ```js
 class BankAccount {
@@ -73,7 +74,7 @@ console.log(account.getBalance()); // 1500
 
 The capability of a class to derive properties and characteristics from another class is called Inheritance. When we write a class, we inherit properties from other classes. So when we create a class, we do not need to write all the properties and functions again and again, as these can be inherited from another class that possesses it. Inheritance allows the user to reuse the code whenever possible and reduce its redundancy.
 
-<img src="../assets/oops-inheritance.png" alt="inheritance" height="300"  width="300"/>
+<img src="../assets/oops-inheritance.png" alt="inheritance" height="300"  width="500"/>
 
 ```js
 class Animal {
@@ -102,7 +103,7 @@ myDog.makeSound(); // Woof Woof!
 
 In simple words, we can define polymorphism as the ability of a message to be displayed in more than one form. For example, A person at the same time can have different characteristics. Like a man at the same time is a father, a husband, an employee. So the same person posses different behavior in different situations. This is called polymorphism.
 
-<img src="../assets/oops-polymorphism.png" alt="polymorphism" height="300"  width="300"/>
+<img src="../assets/oops-polymorphism.png" alt="polymorphism" height="300"  width="500"/>
 
 ```js
 class Bird {
