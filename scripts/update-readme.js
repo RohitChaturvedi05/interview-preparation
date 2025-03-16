@@ -24,6 +24,7 @@ const collectionPath = path.join(__dirname, '../collection');
 
 const sectionOrder = [
     'Javascript',
+    'OOPS',
     'Typescript',
     'WebFundamental',
     'Graphql',

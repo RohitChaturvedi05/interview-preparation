@@ -5,6 +5,7 @@ This repository contains a comprehensive collection of interview questions and a
 ## Table of Contents
 
 - [Javascript](#javascript)
+- [OOPS](#oops)
 - [Typescript](#typescript)
 - [WebFundamental](#webfundamental)
 - [Graphql](#graphql)
@@ -27,6 +28,19 @@ This repository contains a comprehensive collection of interview questions and a
 - [Modern JavaScript Features](collection/Javascript.md#modern-javascript-features)
 - [Security & Best Practices](collection/Javascript.md#security--best-practices)
 - [Data Structures & Algorithms](collection/Javascript.md#data-structures--algorithms)
+
+## OOPS
+
+- [OOP Concepts](collection/OOPS.md#oop-concepts)
+- [OOP in JavaScript: Prototypal vs. Class-based](collection/OOPS.md#oop-in-javascript-prototypal-vs-class-based)
+- [Benefits of OOP in JavaScript](collection/OOPS.md#benefits-of-oop-in-javascript)
+- [FAQs](collection/OOPS.md#faqs)
+- [What is Object-Oriented Programming (OOP)?](collection/OOPS.md#what-is-object-oriented-programming-oop)
+- [What are the four main principles of OOP?](collection/OOPS.md#what-are-the-four-main-principles-of-oop)
+- [What is the difference between Class and Object?](collection/OOPS.md#what-is-the-difference-between-class-and-object)
+- [What is the difference between Abstraction and Encapsulation?](collection/OOPS.md#what-is-the-difference-between-abstraction-and-encapsulation)
+- [What is Method Overriding in JavaScript?](collection/OOPS.md#what-is-method-overriding-in-javascript)
+- [What is the difference between Prototypal and Class-based OOP in JavaScript?](collection/OOPS.md#what-is-the-difference-between-prototypal-and-class-based-oop-in-javascript)
 
 ## Typescript
 
