@@ -1,1 +1,1 @@
-# Graphql IInterview Questions
+# Graphql Interview Questions

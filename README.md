@@ -91,6 +91,10 @@ This repository contains a comprehensive collection of interview questions and a
 - [**Intermediate Questions**](collection/mongodb/Mongodb.md#intermediate-questions)
 - [**Advanced Questions**](collection/mongodb/Mongodb.md#advanced-questions)
 
+### SampleQueries
+
+- [MongoDB Aggregation Questions & Answers](collection/mongodb/SampleQueries.md#mongodb-aggregation-questions--answers)
+
 ## Contributing
 
 Contributions are welcome! If you have any additional questions or improvements, please submit a pull request. 
