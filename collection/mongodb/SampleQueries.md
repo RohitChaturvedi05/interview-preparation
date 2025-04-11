@@ -1,5 +1,36 @@
 ## MongoDB Aggregation Questions & Answers
 
+### 📊 Collection Structures
+
+#### Employees
+
+| Field      | Type   |
+| ---------- | ------ |
+| first_name | String |
+| last_name  | String |
+| age        | Number |
+| salary     | Number |
+| department | String |
+
+#### Departments
+
+| Field     | Type     |
+| --------- | -------- |
+| \_id      | ObjectId |
+| name      | String   |
+| managerId | ObjectId |
+
+#### Sales
+
+| Field     | Type                                 |
+| --------- | ------------------------------------ |
+| \_id      | ObjectId                             |
+| sales_by  | String                               |
+| amount    | Number                               |
+| createdAt | Date (optional for advanced queries) |
+
+---
+
 ### 🟢 Basic Level
 
 #### List all employees
