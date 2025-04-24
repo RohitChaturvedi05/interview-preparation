@@ -175,9 +175,10 @@ function* generateSequence() {
 
 let generator = generateSequence();
 
-console.log(generator.next().value); // Output: 1
-console.log(generator.next().value); // Output: 2
-console.log(generator.next().value); // Output: 3
+console.log(generator.next()); // Output: { value: 1, done: false }
+console.log(generator.next()); // Output: { value: 2, done: false }
+console.log(generator.next()); // Output: { value: 3, done: false }
+console.log(generator.next()); // Output: { value: undefined, done: true }
 ```
 
 ### What is `Symbol.iterator` ?
@@ -1687,4 +1688,60 @@ Explanation: 0s 1s and 2s are segregated into ascending order.
 Follow up: Could you come up with a one-pass algorithm using only constant extra space?
 
 */
+```
+
+### How to create a Calculator with functional Programming?
+
+```javascript
+class Calculator {
+    constructor(startValue = 0) {
+        this.results = startValue;
+    }
+    _curry(operation) {
+        const allArgs = [];
+        const curried = (...nextArgs) => {
+            if (nextArgs.length == 0) {
+                this.results = operation(this.results, ...allArgs);
+                return this;
+            }
+            allArgs.push(...nextArgs);
+            return curried;
+        };
+        return curried;
+    }
+    add(...args) {
+        return this._curry(function (prevValue, ...values) {
+            return values.reduce((a, b) => a + b, prevValue);
+        })(...args);
+    }
+    subtract(...args) {
+        return this._curry(function (prevValue, ...values) {
+            return values.reduce((a, b) => a - b, prevValue);
+        })(...args);
+    }
+    multiply(...args) {
+        return this._curry(function (prevValue, ...values) {
+            return values.reduce((a, b) => a * b, prevValue);
+        })(...args);
+    }
+    divide(...args) {
+        return this._curry(function (prevValue, ...values) {
+            return values.reduce((a, b) => a / b, prevValue);
+        })(...args);
+    }
+    equals() {
+        return this.results;
+    }
+}
+
+const calc = new Calculator();
+
+const val = calc
+    .add(10, 20)()
+    .multiply(10)()
+    .subtract(2)()
+    .divide(10)()
+    .equals();
+
+console.log(val);
 ```
