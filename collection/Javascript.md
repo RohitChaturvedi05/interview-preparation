@@ -439,23 +439,249 @@ console.log(person.lastName); // Output: Smith
 
 ### How does the JavaScript event loop work?
 
+The event loop is a mechanism that allows JavaScript to perform non-blocking operations despite being single-threaded. It continuously checks if there are any tasks in the queue that need to be executed.
+
+Example:
+
+```javascript
+console.log('Start');
+
+setTimeout(() => {
+    console.log('Timeout');
+}, 0);
+
+Promise.resolve().then(() => {
+    console.log('Promise');
+});
+
+console.log('End');
+
+// Output:
+// Start
+// End
+// Promise
+// Timeout
+```
+
 ### What is the difference between microtasks and macrotasks?
+
+Microtasks are tasks that need to be executed immediately after the current script, while macrotasks are queued to be executed in the next iteration of the event loop.
+
+-   Microtasks: Promise callbacks, process.nextTick, queueMicrotask
+-   Macrotasks: setTimeout, setInterval, setImmediate, I/O operations
+
+Example:
+
+```javascript
+console.log('Script start');
+
+setTimeout(() => {
+    console.log('Timeout'); // Macrotask
+}, 0);
+
+Promise.resolve()
+    .then(() => {
+        console.log('Promise 1'); // Microtask
+    })
+    .then(() => {
+        console.log('Promise 2'); // Microtask
+    });
+
+console.log('Script end');
+
+// Output:
+// Script start
+// Script end
+// Promise 1
+// Promise 2
+// Timeout
+```
 
 ### How do `setTimeout()` and `setInterval()` work in JavaScript?
 
+`setTimeout()` executes a function once after a specified delay
+`setInterval()` executes a function repeatedly at specified intervals.
+
+Example:
+
+```javascript
+// setTimeout
+console.log('Start');
+setTimeout(() => {
+    console.log('Executed after 2 seconds');
+}, 2000);
+
+// setInterval
+let counter = 0;
+const intervalId = setInterval(() => {
+    console.log(`Counter: ${counter++}`);
+    if (counter > 3) {
+        clearInterval(intervalId);
+    }
+}, 1000);
+```
+
 ### Explain the difference between `Promise.all()`, `Promise.allSettled()`, `Promise.race()`, and `Promise.any()`.
 
+-   `Promise.all()`: Resolves when all promises resolve, rejects if any promise rejects.
+-   `Promise.allSettled()`: Waits for all promises to complete, regardless of state.
+-   `Promise.race()`: Resolves or rejects as soon as the first promise resolves or rejects.
+-   `Promise.any()`: Resolves as soon as any promise resolves, rejects if all promises reject.
+    Example:
+
+```javascript
+const promise1 = Promise.resolve(1);
+const promise2 = Promise.reject('Error');
+const promise3 = new Promise((resolve) => setTimeout(() => resolve(3), 1000));
+
+// Promise.all() - resolves when all promises resolve, rejects if any promise rejects
+Promise.all([promise1, promise3])
+    .then((results) => console.log(results)) // [1, 3]
+    .catch((error) => console.error(error));
+
+// Promise.allSettled() - waits for all promises to complete, regardless of state
+Promise.allSettled([promise1, promise2, promise3]).then((results) =>
+    console.log(results)
+);
+// [{status: "fulfilled", value: 1},
+//  {status: "rejected", reason: "Error"},
+//  {status: "fulfilled", value: 3}]
+
+// Promise.race() - resolves/rejects as soon as the first promise settles
+Promise.race([promise1, promise3]).then((result) => console.log(result)); // 1
+
+// Promise.any() - resolves when the first promise resolves, rejects if all promises reject
+Promise.any([promise2, promise3]).then((result) => console.log(result)); // 3
+```
+
 ### How does async/await work internally?
+
+Async/await is syntactic sugar over promises that makes asynchronous code look synchronous. Internally, it creates a state machine that manages the promise chain.
+
+Example:
+
+```javascript
+async function fetchUserData() {
+    try {
+        const response = await fetch('https://api.example.com/user');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+```
 
 ## Closures & Higher-Order Functions
 
 ### What is a closure, and how does it work?
 
+A closure is a function that has access to variables in its outer (enclosing) lexical scope, even after the outer function has returned.
+
+Example:
+
+```javascript
+function createCounter() {
+    let count = 0;
+    return {
+        increment: () => ++count,
+        getCount: () => count,
+    };
+}
+
+const counter = createCounter();
+console.log(counter.increment()); // 1
+console.log(counter.increment()); // 2
+console.log(counter.getCount()); // 2
+```
+
 ### How do you create a private variable using closures in JavaScript?
+
+Closures can be used to create private variables that are not accessible from the outside scope.
+
+Example:
+
+```javascript
+function createWallet(initialBalance) {
+    let balance = initialBalance;
+
+    return {
+        getBalance: () => balance,
+        deposit: (amount) => {
+            balance += amount;
+            return balance;
+        },
+        withdraw: (amount) => {
+            if (amount > balance) return 'Insufficient funds';
+            balance -= amount;
+            return balance;
+        },
+    };
+}
+
+const wallet = createWallet(100);
+console.log(wallet.getBalance()); // 100
+console.log(wallet.deposit(50)); // 150
+console.log(wallet.withdraw(70)); // 80
+console.log(wallet.balance); // undefined (private)
+```
 
 ### What are higher-order functions, and how are they used?
 
+Higher-order functions are functions that take other functions as arguments or return functions as their results.
+
+Example:
+
+```javascript
+// Function that returns a function
+const multiply = (x) => {
+    return (y) => x * y;
+};
+
+const multiplyByTwo = multiply(2);
+console.log(multiplyByTwo(4)); // 8
+
+// Function that takes a function as argument
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((num) => num * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+```
+
 ### How does JavaScript handle callback functions?
+
+Callbacks are functions passed as arguments to other functions, which are executed after the main function has finished its execution.
+
+Example:
+
+```javascript
+function fetchData(callback) {
+    setTimeout(() => {
+        const data = { id: 1, name: 'John' };
+        callback(data);
+    }, 1000);
+}
+
+fetchData((result) => {
+    console.log('Data received:', result);
+});
+
+// Example with error handling
+function fetchDataWithError(success, error) {
+    setTimeout(() => {
+        const random = Math.random();
+        if (random > 0.5) {
+            success({ id: 1, name: 'John' });
+        } else {
+            error(new Error('Failed to fetch data'));
+        }
+    }, 1000);
+}
+
+fetchDataWithError(
+    (data) => console.log('Success:', data),
+    (err) => console.error('Error:', err)
+);
+```
 
 ### What is function currying, and how does it work?
 
